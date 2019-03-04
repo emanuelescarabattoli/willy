@@ -1,11 +1,13 @@
 import { IsString, IsNotEmpty, IsEmail, IsNumber } from 'class-validator';
 
-export class ContactCreateDto {
+export class ContactUpdateDto {
     @IsNotEmpty()
+    @IsNumber()
+    readonly id: number;
+
     @IsString()
     readonly description: string;
 
-    @IsNotEmpty()
     @IsEmail()
     readonly email: string;
 }
