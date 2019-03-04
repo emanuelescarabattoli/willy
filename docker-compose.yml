@@ -1,0 +1,10 @@
+version: '2'
+services:
+   db:
+    image: postgres:10
+    environment:
+      - POSTGRES_DB=contacts
+      - POSTGRES_USER=contacts
+      - POSTGRES_PASSWORD=contacts
+    ports:
+      - "5432:5432"
