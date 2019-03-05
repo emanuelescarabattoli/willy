@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Put, Delete, Body, ValidationPipe, UsePipes, NotFoundException, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, NotFoundException, Param, ParseIntPipe } from '@nestjs/common';
 
 import { ContactService } from './contact.service';
 import { Contact } from './contact.entity';
 import { ContactCreateDto } from './contact.create.dto';
 import { ContactUpdateDto } from './contact.update.dto';
-import { IdParameters } from '../common/id.parameters';
 
 @Controller('contacts')
 export class ContactController {
@@ -16,8 +15,8 @@ export class ContactController {
     }
 
     @Get(':id')
-    async detail(@Param() parameters: IdParameters): Promise<Contact> {
-        const contact = await this.contactService.detail(parameters.id);
+    async detail(@Param('id', new ParseIntPipe()) id): Promise<Contact> {
+        const contact = await this.contactService.detail(id);
         if (contact) {
             return contact;
         }
@@ -39,8 +38,8 @@ export class ContactController {
     }
 
     @Delete(':id')
-    async delete(@Param() parameters: IdParameters): Promise<object> {
-        const affected = await this.contactService.delete(parameters.id);
+    async delete(@Param('id', new ParseIntPipe()) id): Promise<object> {
+        const affected = await this.contactService.delete(id);
         return { affected };
     }
 }
