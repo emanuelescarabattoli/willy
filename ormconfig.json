@@ -1,0 +1,19 @@
+{
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "contacts",
+    "password": "contacts",
+    "database": "contacts",
+    "synchronize": true,
+    "entities": [
+        "src/**/**.entity.ts"
+    ],
+    "migrations": [
+        "src/**/**.migration.ts"
+    ],
+    "migrationsTableName": "migrations",
+    "cli": {
+        "migrationsDir": "src/migrations"
+    }
+}
