@@ -13,11 +13,11 @@ export class AuthenticationController {
 
     // Route to login an user
     @Post('login')
-    async login(@Body() loginDto: LoginDto): Promise<object> {
+    async login(@Body() loginDto: LoginDto): Promise<string> {
         const user = await this.userService.detail(loginDto.username);
         if (user) {
             if (await this.userService.compareHash(loginDto.password, user.password)) {
-                return await this.authenticationService.generateToken(user.username);
+                return await this.authenticationService.signIn(user.username);
             }
         }
 

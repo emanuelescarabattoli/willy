@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -7,16 +7,15 @@ import { User } from '../user/user.entity';
 
 @Injectable()
 export class AuthenticationService {
-    constructor(@InjectRepository(User) private readonly userRepository: Repository<User>) { }
+    constructor(
+        @InjectRepository(User) private readonly userRepository: Repository<User>,
+        private readonly jwtService: JwtService,
+    ) { }
 
-    // Starting from an username it generates a token
-    async generateToken(username: string) {
-        const expiresIn = 3600;
-        const secretOrKey = '1234567890';
+    async signIn(username: string): Promise<string> {
         const user = { username };
-        const token = jwt.sign(user, secretOrKey, { expiresIn });
-        return { expires_in: expiresIn, token };
-    }
+        return this.jwtService.sign(user);
+      }
 
     async validateUser(user): Promise<boolean> {
         if (user && user.username) {
