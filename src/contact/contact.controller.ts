@@ -3,8 +3,8 @@ import { AuthGuard } from '@nestjs/passport';
 
 import { ContactService } from './contact.service';
 import { Contact } from './contact.entity';
-import { ContactCreateDto } from './contact.create.dto';
-import { ContactUpdateDto } from './contact.update.dto';
+import { ContactCreateDto } from './dto/contact.create.dto';
+import { ContactUpdateDto } from './dto/contact.update.dto';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('contacts')
