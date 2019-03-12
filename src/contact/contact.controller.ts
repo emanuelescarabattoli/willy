@@ -6,7 +6,7 @@ import { Contact } from './contact.entity';
 import { ContactCreateDto } from './dto/contact.create.dto';
 import { ContactUpdateDto } from './dto/contact.update.dto';
 
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 @Controller('contacts')
 export class ContactController {
     constructor(private readonly contactService: ContactService) { }
