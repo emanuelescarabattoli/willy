@@ -11,32 +11,32 @@ export class ContactService {
     constructor(@InjectRepository(Contact) private readonly contactRepository: Repository<Contact>) { }
 
     // The list of contacts
-    async list(): Promise<Contact[]> {
-        return await this.contactRepository.find();
+    async list(username: string): Promise<Contact[]> {
+        return await this.contactRepository.find({ username });
     }
 
     // The detail of a contact
-    async detail(id: number): Promise<Contact> {
-        return await this.contactRepository.findOne({ id });
+    async detail(id: number, username: string): Promise<Contact> {
+        return await this.contactRepository.findOne({ id, username });
     }
 
     // Saves a contract and returns the created object
-    async create(contactCreateDto: ContactCreateDto): Promise<Contact> {
-        return await this.contactRepository.save({ ...contactCreateDto, status: 1 });
+    async create(contactCreateDto: ContactCreateDto, username: string): Promise<Contact> {
+        return await this.contactRepository.save({ ...contactCreateDto, status: 1, username });
     }
 
     // Saves a contract and returns the created object
-    async update(contactUpdateDto: ContactUpdateDto): Promise<Contact> {
+    async update(contactUpdateDto: ContactUpdateDto, username: string): Promise<Contact> {
         const contact = await this.contactRepository.findOne({ id: contactUpdateDto.id });
         if (contact) {
-            return await this.contactRepository.save({ ...contact, ...contactUpdateDto });
+            return await this.contactRepository.save({ ...contact, ...contactUpdateDto, username });
         }
         return null;
     }
 
     // Saves a contract and returns the created object
-    async delete(id: number): Promise<number> {
-        const result = await this.contactRepository.delete({ id });
+    async delete(id: number, username: string): Promise<number> {
+        const result = await this.contactRepository.delete({ id, username });
         return result.affected;
     }
 }

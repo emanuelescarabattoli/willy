@@ -5,6 +5,9 @@ export class Contact {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column()
+    username: string;
+
     @Column({ length: 500 })
     description: string;
 
